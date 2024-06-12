@@ -5,6 +5,7 @@ Ce module fournit plusieurs méthodes pour calculer l'intégrale d'un polynôme 
 
 Fonctions:
     - f: Calcule la valeur du polynôme de degré 3 à un point x donné.
+    - rectangles: Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec la méthode des rectangles vectorisée.
     - trapezes: Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec  la méthode des trapèzes vectorisée.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
@@ -27,6 +28,24 @@ def f(p, x):
     (float) Valeur du polynôme f(x) = p[0] + p[1] * x + p[2] * x**2 + p[3] * x**3
     """
     return p[0] + p[1] * x + p[2] * x**2 + p[3] * x**3
+
+
+# Méthode des rectangles
+def rectangles(p, a, b, n=10):
+    """
+    Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec la méthode des rectangles vectorisée.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    n (int) : nombre de segments (10 par défaut)
+
+    Retour:
+    (float) Valeur approximative de l'intégrale de f(x) sur [a, b] par la méthode des rectangles vectorisée
+    """
+    pas = (b - a) / n
+    x = np.linspace(a, b, n, endpoint=False)
+    return np.sum(f(p, x + 0.5 * pas) * pas)
 
 
 # Méthode des trapèzes

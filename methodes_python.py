@@ -47,6 +47,27 @@ def analytique(p, a, b):
             p[3] * (b**4 - a**4) / 4)
 
 
+# Méthode des rectangles
+def rectangles(p, a, b, n=10):
+    """
+    Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec la méthode des rectangles.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    n (int) : nombre de segments (10 par défaut)
+
+    Retour:
+    integrale (float) : valeur approximative de l'intégrale de f(x) sur [a, b] par la méthode des rectangles
+    """
+    pas = (b - a) / n
+    integrale = 0
+    for i in range(n):
+        x = a + (i + 0.5) * pas
+        integrale += f(p, x) * pas
+    return integrale
+
+
 # Méthode des trapèzes
 def trapezes(p, a, b, n=10):
     """
