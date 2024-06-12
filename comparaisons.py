@@ -13,6 +13,7 @@ Fonctions:
     - plot_convergence: Affiche la convergence des différentes méthodes d'intégration en fonction du nombre de segments.
     - plot_temps_execution: Affiche un graphique du temps d'exécution des méthodes en fonction du nombre de segments.
     - resulat: Affiche les résultats des méthodes d'intégration, y compris l'erreur et le temps d'exécution.
+    - methodes_a_comparer: Retourne un dictionnaire des méthodes d'intégration à comparer.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
 Date: 05/06/2024
@@ -179,3 +180,24 @@ def resulat(p, a, b, methodes, n=10):
         erreur = erreur_absolue(analytique, numerique)
         tps_execution = temps_execution(methode, p, a, b, n)
         print(f"{nom_methode}: I = {numerique:.3f}, Erreur = {erreur:.3e}, Temps d'exécution = {tps_execution:.3e}")
+
+
+# Méthodes à comparer
+def methodes_a_comparer():
+    """
+    Retourne un dictionnaire des méthodes d'intégration à comparer, avec leurs styles de ligne pour les graphiques.
+
+    Retour:
+    methodes (dict) : dictionnaire contenant les méthodes d'intégration et leurs styles de ligne
+    """
+    methodes = {
+        'Rectangles (Base)': {'fonction': methodes_python.rectangles, 'linestyle': '-'},
+        'Rectangles (NumPy)': {'fonction': methodes_numpy.rectangles, 'linestyle': '--'},
+        'Trapèzes (Base)': {'fonction': methodes_python.trapezes, 'linestyle': '-'},
+        'Trapèzes (NumPy)': {'fonction': methodes_numpy.trapezes, 'linestyle': '--'},
+        'Trapèzes (SciPy)': {'fonction': methodes_scipy.trapezes, 'linestyle': ':'},
+        'Simpson (Base)': {'fonction': methodes_python.simpson, 'linestyle': '-'},
+        'Simpson (NumPy)': {'fonction': methodes_numpy.simpson, 'linestyle': '--'},
+        'Simpson (SciPy)': {'fonction': methodes_scipy.smpson, 'linestyle': ':'}
+        }
+    return methodes
