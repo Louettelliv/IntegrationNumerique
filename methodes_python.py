@@ -8,9 +8,10 @@ Fonctions:
     - analytique: Calcule l'intégrale analytique du polynôme de degré 3 sur [a, b].
     - rectangles: Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec la méthode des rectangles.
     - trapezes: Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec  la méthode des trapèzes.
+    - simpson: Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec  la méthode de Simpson.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
-Date: 05/06/2024
+Date: 11/06/2024
 """
 
 
@@ -87,4 +88,29 @@ def trapezes(p, a, b, n=10):
         x = a + i * pas
         integrale += f(p, x)
     integrale *= pas
+    return integrale
+
+
+# Méthode de Simpson
+def simpson(p, a, b, n=10):
+    """
+    Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec la méthode de Simpson.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    n (int) : nombre de segments (10 par défaut)
+
+    Retour:
+    integrale (float) : valeur approximative de l'intégrale de f(x) sur [a, b] par la méthode de Simpson
+    """
+    pas = (b - a) / n
+    integrale = (f(p, a) + f(p, b))
+    for i in range(1, 2 * n):
+        x = a + i * pas / 2
+        if i % 2 == 0:
+            integrale += 2 * f(p, x)
+        else:
+            integrale += 4 * f(p, x)
+    integrale *= pas / 6
     return integrale
