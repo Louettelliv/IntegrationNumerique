@@ -7,7 +7,7 @@ Fonctions:
     - main: Fonction principale du module qui exécute les comparaisons et génère les graphiques.
 
 Auteur: Lou-Anne Villette & Thomas Chambeyron
-Date: 05/06/2024
+Date: 11/06/2024
 """
 
 import comparaisons
@@ -23,6 +23,25 @@ def main():
     # Coefficients du polynôme et bornes de l'intervalle
     p = [1, 2, 3, 4]
     a, b = 0, 10
+
+    # Liste des différents nombres de segments à utiliser pour les comparaisons
+    segments = (list(range(10, 101, 10)) + list(range(200, 1001, 100))
+                + list(range(2000, 10001, 1000)) + list(range(20000, 100001, 10000)))
+
+    # Récupération des méthodes d'intégration à comparer
+    methodes = comparaisons.methodes_a_comparer()
+
+    # Affichage des résultats des différentes méthodes d'intégration
+    comparaisons.resulat(p, a, b, methodes)
+
+    # Génération et affichage des graphiques de convergence
+    comparaisons.plot_convergence(p, a, b, segments, methodes)
+
+    # Génération et affichage des graphiques de temps d'exécution
+    comparaisons.plot_temps_execution(p, a, b, segments, methodes)
+
+    # Génération et affichage des histogrammes des erreurs pour différents nombres de segments
+    comparaisons.plot_erreur(p, a, b, [10, 100, 1000, 10000], methodes)
 
 
 if __name__ == "__main__":
