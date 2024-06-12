@@ -12,6 +12,7 @@ Fonctions:
     - plot_erreur: Affiche un histogramme des erreurs pour différentes méthodes et différents nombres de segments.
     - plot_convergence: Affiche la convergence des différentes méthodes d'intégration en fonction du nombre de segments.
     - plot_temps_execution: Affiche un graphique du temps d'exécution des méthodes en fonction du nombre de segments.
+    - resulat: Affiche les résultats des méthodes d'intégration, y compris l'erreur et le temps d'exécution.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
 Date: 05/06/2024
@@ -158,3 +159,23 @@ def plot_temps_execution(p, a, b, segments, methodes):
     plt.legend()
     plt.grid(True)
     plt.show()
+
+
+# Résultats des méthodes
+def resulat(p, a, b, methodes, n=10):
+    """
+    Affiche les résultats des méthodes d'intégration, y compris l'erreur et le temps d'exécution.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    n (int) : nombre de segments (10 par défaut)
+    methodes (dict) : dictionnaire des méthodes d'intégration
+    """
+    analytique = methodes_python.analytique(p, a, b)
+    for nom_methode, info in methodes.items():
+        methode = info['fonction']
+        numerique = methode(p, a, b, n)
+        erreur = erreur_absolue(analytique, numerique)
+        tps_execution = temps_execution(methode, p, a, b, n)
+        print(f"{nom_methode}: I = {numerique:.3f}, Erreur = {erreur:.3e}, Temps d'exécution = {tps_execution:.3e}")
