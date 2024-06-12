@@ -20,8 +20,9 @@ def main():
     d'exécution et des erreurs.
     """
 
-    # Coefficients du polynôme
+    # Coefficients du polynôme et bornes de l'intervalle
     p = [1, 2, 3, 4]
+    a, b = 0, 10
 
 
 if __name__ == "__main__":
