@@ -9,6 +9,7 @@ Fonctions:
     - erreur_absolue: Calcule l'erreur absolue entre l'intégrale analytique et l'intégrale numérique.
     - erreur_integration: Retourne l'erreur absolue pour un nombre donné de segments.
     - temps_execution: Mesure le temps d'exécution d'une méthode d'intégration.
+    - plot_erreur: Affiche un histogramme des erreurs pour différentes méthodes et différents nombres de segments.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
 Date: 05/06/2024
@@ -72,3 +73,33 @@ def temps_execution(methode, p, a, b, n=10):
     (float) Temps d'exécution moyen en secondes de la méthode pour les paramètres donnés
     """
     return timeit(lambda: methode(p, a, b, n), number=10)/10
+
+
+def plot_erreur(p, a, b, segments, methodes):
+    """
+    Affiche un histogramme des erreurs d'intégration pour différentes méthodes et différents nombres de segments.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    segments (list) : liste du nombre de segments à utiliser
+    methodes (dict) : dictionnaire des méthodes d'intégration
+    """
+    bar_width = 0.2  # Largeur des barres de l'histogramme
+    index = np.arange(len(methodes))  # Positions des groupes sur l'axe des x
+
+    plt.figure()
+
+    for i, n in enumerate(segments):
+        erreurs = [erreur_integration(p, a, b, info['fonction'], n) for info in methodes.values()]
+        bar_positions = index + i * bar_width  # Calcul des positions des barres
+        plt.bar(bar_positions, erreurs, bar_width, label=f'{n} Segments')
+
+    plt.xlabel("Méthode d'intégration")
+    plt.ylabel("Erreur d'intégration")
+    plt.yscale('log')
+    plt.title('Erreurs par méthode et par nombre de segments')
+    plt.xticks(index + bar_width * (len(segments) - 1) / 2, list(methodes.keys()))
+    plt.legend()
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.show()
