@@ -11,6 +11,7 @@ Fonctions:
     - temps_execution: Mesure le temps d'exécution d'une méthode d'intégration.
     - plot_erreur: Affiche un histogramme des erreurs pour différentes méthodes et différents nombres de segments.
     - plot_convergence: Affiche la convergence des différentes méthodes d'intégration en fonction du nombre de segments.
+    - plot_temps_execution: Affiche un graphique du temps d'exécution des méthodes en fonction du nombre de segments.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
 Date: 05/06/2024
@@ -128,6 +129,32 @@ def plot_convergence(p, a, b, segments, methodes):
     plt.ylabel("Erreur d'intégration")
     plt.yscale('log')
     plt.title("Convergence des différentes méthodes d'intégration")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+# Graphiques de temps d'exécution
+def plot_temps_execution(p, a, b, segments, methodes):
+    """
+    Affiche un graphique du temps d'exécution des différentes méthodes en fonction du nombre de segments.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    segments (list) : liste du nombre de segments à utiliser
+    methodes (dict) : dictionnaire des méthodes d'intégration
+    """
+    plt.figure()
+    for nom_methode, info in methodes.items():
+        methode = info['fonction']
+        linestyle = info['linestyle']
+        times = [temps_execution(methode, p, a, b, n) for n in segments]
+        plt.plot(segments, times, label=nom_methode, linestyle=linestyle)
+    plt.xlabel('Nombre de segments')
+    plt.xscale('log')
+    plt.ylabel("Temps d'exécution (s)")
+    plt.yscale('log')
+    plt.title("Temps d'exécution des différentes méthodes d'intégration")
     plt.legend()
     plt.grid(True)
     plt.show()
