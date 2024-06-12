@@ -10,6 +10,7 @@ Fonctions:
     - erreur_integration: Retourne l'erreur absolue pour un nombre donné de segments.
     - temps_execution: Mesure le temps d'exécution d'une méthode d'intégration.
     - plot_erreur: Affiche un histogramme des erreurs pour différentes méthodes et différents nombres de segments.
+    - plot_convergence: Affiche la convergence des différentes méthodes d'intégration en fonction du nombre de segments.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
 Date: 05/06/2024
@@ -102,4 +103,31 @@ def plot_erreur(p, a, b, segments, methodes):
     plt.xticks(index + bar_width * (len(segments) - 1) / 2, list(methodes.keys()))
     plt.legend()
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.show()
+
+
+# Fonction pour vérifier la convergence
+def plot_convergence(p, a, b, segments, methodes):
+    """
+    Affiche la convergence des différentes méthodes d'intégration en fonction du nombre de segments.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    segments (list) : liste du nombre de segments à utiliser
+    methodes (dict) : dictionnaire des méthodes d'intégration
+    """
+    plt.figure()
+    for nom_methode, info in methodes.items():
+        methode = info['fonction']
+        linestyle = info['linestyle']
+        erreurs = [erreur_integration(p, a, b, methode, n) for n in segments]
+        plt.plot(segments, erreurs, label=nom_methode, linestyle=linestyle)
+    plt.xlabel('Nombre de segments')
+    plt.xscale('log')
+    plt.ylabel("Erreur d'intégration")
+    plt.yscale('log')
+    plt.title("Convergence des différentes méthodes d'intégration")
+    plt.legend()
+    plt.grid(True)
     plt.show()
