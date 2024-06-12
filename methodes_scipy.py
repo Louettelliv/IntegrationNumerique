@@ -6,9 +6,10 @@ Ce module fournit plusieurs méthodes pour calculer l'intégrale d'un polynôme 
 Fonctions:
     - f: Calcule la valeur du polynôme de degré 3 à un point x donné.
     - trapezes: Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec  la méthode des trapèzes de scipy.
+    - simpson: Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec  la méthode de Simpson de scipy.
 
 Auteurs: Lou-Anne Villette & Thomas Chambeyron
-Date: 05/06/2024
+Date: 11/06/2024
 """
 
 import numpy as np
@@ -46,3 +47,20 @@ def trapezes(p, a, b, n=10):
     x = np.linspace(a, b, n+1)
     y = f(p, x)
     return trapezoid(y, x)
+
+
+def smpson(p, a, b, n=10):
+    """
+    Calcule l'intégrale du polynôme de degré 3 sur [a, b] avec la méthode de Simpson de scipy.
+
+    Arguments:
+    p (list) : liste des coefficients du polynôme
+    a, b (float) : bornes de l'intervalle d'intégration
+    n (int) : nombre de segments (10 par défaut)
+
+    Retour:
+    (float) Valeur approximative de l'intégrale de f(x) sur [a, b] par la méthode de Simpson de scipy
+    """
+    x = np.linspace(a, b, 2*n+1)
+    y = f(p, x)
+    return simpson(y, x)
